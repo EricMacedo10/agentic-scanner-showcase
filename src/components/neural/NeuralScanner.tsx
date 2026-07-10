@@ -289,7 +289,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
               key={node.id}
               initial={{ opacity: 0, scale: 0.4 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: node.step * 0.1, type: "spring", stiffness: 160, damping: 14 }}
+              transition={{ delay: (node.step ?? (i + 1)) * 0.1, type: "spring", stiffness: 160, damping: 14 }}
               className="absolute"
               style={{
                 left: `${leftPct}%`,

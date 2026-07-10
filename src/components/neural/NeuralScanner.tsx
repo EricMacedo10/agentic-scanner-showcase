@@ -275,7 +275,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
         </div>
 
         {/* ── Orbital Node Cards ── */}
-        {NODES.map((node) => {
+        {NODES.map((node, i) => {
           const { x, y } = polar(node.angle);
           const leftPct = (x / VW) * 100;
           const topPct  = (y / VH) * 100;

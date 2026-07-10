@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 Agentic Workflow Scanner
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-First, run the development server:
+O **Agentic Workflow Scanner** é uma engine visual de alta performance construída para orquestrar e mapear fluxos arquiteturais complexos. Neste repositório, apresento um showcase focado no mapeamento da **Trilha dos Juros** (AWS + Python + Vercel).
+
+---
+
+## 🎨 A Visão Neural
+
+Abandonando fluxogramas tradicionais, esta interface aplica conceitos de posicionamento orbital polar e matemática em SVG puro (`<animateMotion>`) para simular pulsos sinápticos e ativação de nós em tempo real, sem ofender a performance do React (0 hydration mismatches).
+
+### Features Principais
+- **Deep-Space Engine:** Fundo vetorial com estrelas geradas deterministicamente e micro-animações de pulso.
+- **Node Orchestration:** Sistema de state-machine (`idle` → `running` → `done`) gerenciado centralmente no `page.tsx`.
+- **Dynamic Sonar Rings:** Efeitos de propagação radial nos nós ativos.
+- **Terminal System:** Logs assíncronos renderizados numa UI imersiva, simulando stdout streams.
+
+## 🏗️ Showcase: Trilha dos Juros
+Este preview demonstra um fluxo mapeado através de IA, analisando a arquitetura agêntica:
+1. 🔔 **AWS EventBridge** (Gatilho e cron jobs)
+2. 📥 **Python Scrapers** (Extração de dados via web/APIs)
+3. ⚙️ **Python Engines** (Processamento RAG / Analytics)
+4. 💾 **DynamoDB** (Armazenamento NoSQL)
+5. 🌐 **AWS Lambda** (Camada Serverless)
+6. 📊 **Vercel Frontend** (Interface de usuário)
+
+## 🚀 Como rodar localmente
 
 ```bash
+# Clone the repository
+git clone https://github.com/EricMacedo10/agentic-scanner-showcase.git
+
+# Navigate to the folder
+cd agentic-scanner-showcase
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador.

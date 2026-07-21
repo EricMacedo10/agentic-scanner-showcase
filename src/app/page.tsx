@@ -120,7 +120,7 @@ export default function HomePage() {
   return (
     <main
       className="flex h-screen flex-col overflow-hidden"
-      style={{ color: "#f8fafc" }}
+      style={{ background: "#000208", color: "#f8fafc" }}
     >
       {/* ── Header ── */}
       <header

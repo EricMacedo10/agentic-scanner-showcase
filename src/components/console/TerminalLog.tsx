@@ -36,10 +36,15 @@ interface TerminalLogProps {
 }
 
 export default function TerminalLog({ logs, isScanning }: TerminalLogProps) {
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [logs]);
 
   return (
@@ -75,7 +80,10 @@ export default function TerminalLog({ logs, isScanning }: TerminalLogProps) {
       </div>
 
       {/* Log body */}
-      <div className="flex-1 overflow-y-auto p-4 font-mono text-xs space-y-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-700">
+      <div 
+        ref={containerRef}
+        className="flex-1 overflow-y-auto p-4 font-mono text-xs space-y-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-700"
+      >
         {logs.length === 0 && (
           <div className="text-slate-600 text-center mt-8">
             <p>▶ Aguardando início do scan...</p>
@@ -108,7 +116,6 @@ export default function TerminalLog({ logs, isScanning }: TerminalLogProps) {
             transition={{ duration: 0.7, repeat: Infinity }}
           />
         )}
-        <div ref={bottomRef} />
       </div>
     </div>
   );

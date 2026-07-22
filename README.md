@@ -17,6 +17,7 @@ Abandonando fluxogramas tradicionais, esta interface aplica conceitos de posicio
 - **Deep-Space Engine:** Fundo vetorial com estrelas geradas deterministicamente e micro-animações de pulso.
 - **Node Orchestration:** Sistema de state-machine (`idle` → `running` → `done`) gerenciado centralmente no `page.tsx`.
 - **Dynamic Sonar Rings:** Efeitos de propagação radial nos nós ativos.
+- **Geometria Responsiva (Mobile-First):** Transição de órbita circular (desktop) para órbita elíptica dinâmica (mobile) recalculando Transform Origins via Framer Motion, prevenindo reflow e overflow em telas ultra finas.
 - **Terminal System:** Logs assíncronos renderizados numa UI imersiva, simulando stdout streams.
 
 ## 🏗️ Showcase: Trilha dos Juros

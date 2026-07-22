@@ -124,32 +124,32 @@ export default function HomePage() {
     >
       {/* ── Header ── */}
       <header
-        className="flex shrink-0 items-center justify-between px-5 py-3"
+        className="flex flex-col md:flex-row shrink-0 items-center justify-between px-5 py-3 gap-3 md:gap-0"
         style={{
           background: "rgba(5,4,20,0.85)",
           borderBottom: "1px solid rgba(139,92,246,0.2)",
           backdropFilter: "blur(12px)",
         }}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
           <div
-            className="flex h-9 w-9 items-center justify-center rounded-xl"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
             style={{ background: "linear-gradient(135deg, #7c3aed, #4f46e5)", boxShadow: "0 0 16px rgba(124,58,237,0.6)" }}
           >
             <BrainCircuit size={18} className="text-white" />
           </div>
-          <div>
-            <h1 className="text-sm font-bold tracking-wide" style={{ color: "#e2e8f0" }}>
+          <div className="text-center md:text-left">
+            <h1 className="text-xs sm:text-sm font-bold tracking-wide" style={{ color: "#e2e8f0" }}>
               Agentic Workflow Scanner
-              <span style={{ color: "#a78bfa", fontWeight: 400 }}> · Trilha dos Juros</span>
+              <span className="hidden sm:inline" style={{ color: "#a78bfa", fontWeight: 400 }}> · Trilha dos Juros</span>
             </h1>
-            <p className="text-[10px] tracking-widest uppercase" style={{ color: "rgba(139,92,246,0.7)" }}>
+            <p className="text-[9px] sm:text-[10px] tracking-widest uppercase" style={{ color: "rgba(139,92,246,0.7)" }}>
               AI-Analyzed Architecture Showcase
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center gap-2 w-full md:w-auto">
           {/* Progress */}
           {(isScanning || isDone) && (
             <div className="flex items-center gap-2 mr-1">
@@ -214,8 +214,8 @@ export default function HomePage() {
       </header>
 
       {/* ── Body ── */}
-      <div className="flex flex-1 overflow-hidden">
-        <div className="flex-1 overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden">
           <NeuralScanner
             activeStatuses={statuses}
             isScanning={isScanning}
@@ -224,8 +224,7 @@ export default function HomePage() {
         </div>
 
         <div
-          className="w-80 shrink-0 p-3 overflow-hidden"
-          style={{ borderLeft: "1px solid rgba(139,92,246,0.15)" }}
+          className="w-full md:w-80 flex-1 md:flex-none min-h-0 md:min-h-auto shrink-0 p-3 overflow-hidden border-t md:border-t-0 md:border-l border-purple-500/20"
         >
           <TerminalLog logs={logs} isScanning={isScanning} />
         </div>
@@ -233,7 +232,7 @@ export default function HomePage() {
 
       {/* ── Footer ── */}
       <footer
-        className="shrink-0 flex items-center justify-between px-5 py-1.5"
+        className="shrink-0 flex flex-col sm:flex-row items-center justify-between px-5 py-2 gap-1 sm:gap-0 text-center sm:text-left"
         style={{
           borderTop: "1px solid rgba(139,92,246,0.12)",
           background: "rgba(5,4,20,0.7)",
@@ -245,7 +244,7 @@ export default function HomePage() {
           Nodes: {completedCount}/{totalNodes} concluídos
           {isDone && <span style={{ marginLeft: 8, color: "#34d399", fontWeight: 700 }}>· Pipeline OK ✓</span>}
         </span>
-        <span>
+        <span className="hidden sm:inline">
           🤖 AI-Analyzed Architecture · Next.js · TypeScript · Framer Motion
         </span>
       </footer>

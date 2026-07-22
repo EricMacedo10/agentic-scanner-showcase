@@ -39,9 +39,9 @@ function makeStars(count: number, vw: number, vh: number) {
 }
 
 // ─── Math Helpers ─────────────────────────────────────────────────────────────
-function polar(angleDeg: number, r: number, cx: number, cy: number) {
+function polar(angleDeg: number, rx: number, ry: number, cx: number, cy: number) {
   const rad = (angleDeg * Math.PI) / 180;
-  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+  return { x: cx + rx * Math.cos(rad), y: cy + ry * Math.sin(rad) };
 }
 
 /** Quadratic bezier with perpendicular curve offset for elegance */
@@ -82,7 +82,8 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
   const VH = isMobile ? 660 : 500;
   const CX = VW / 2;
   const CY = VH / 2;
-  const R  = isMobile ? 210 : 178;
+  const RX = isMobile ? 210 : 178;
+  const RY = isMobile ? 140 : 178; // Elliptical orbit on mobile (tighter vertically)
 
   const STARS = useMemo(() => makeStars(isMobile ? 55 : 80, VW, VH), [isMobile, VW, VH]);
 
@@ -120,8 +121,8 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
           ))}
 
           {/* Decorative orbital rings */}
-          <circle cx={CX} cy={CY} r={R + 30} fill="none" stroke="rgba(99,102,241,0.05)" strokeWidth="1.5" strokeDasharray="4 12" />
-          <circle cx={CX} cy={CY} r={R}      fill="none" stroke="rgba(99,102,241,0.18)" strokeWidth="0.8" strokeDasharray="8 14" />
+          <ellipse cx={CX} cy={CY} rx={RX + 30} ry={RY + 30} fill="none" stroke="rgba(99,102,241,0.05)" strokeWidth="1.5" strokeDasharray="4 12" />
+          <ellipse cx={CX} cy={CY} rx={RX} ry={RY} fill="none" stroke="rgba(99,102,241,0.18)" strokeWidth="0.8" strokeDasharray="8 14" />
 
           {/* Brain aura rings */}
           <circle cx={CX} cy={CY} r={52} fill="rgba(139,92,246,0.07)" stroke="rgba(167,139,250,0.22)" strokeWidth="0.8" />
@@ -129,7 +130,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
 
           {/* Hex node markers on the orbital ring */}
           {NODES.map((node) => {
-            const { x, y } = polar(node.angle, R, CX, CY);
+            const { x, y } = polar(node.angle, RX, RY, CX, CY);
             return (
               <circle
                 key={node.id + "-marker"}
@@ -145,7 +146,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
 
           {/* Connection paths */}
           {NODES.map((node) => {
-            const { x, y } = polar(node.angle, R, CX, CY);
+            const { x, y } = polar(node.angle, RX, RY, CX, CY);
             const path = curvePath(x, y, CX, CY);
             const status = activeStatuses[node.id] ?? "idle";
             const isRunning = status === "running";
@@ -207,7 +208,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
               {/* Sweep line */}
               <line
                 x1={CX} y1={CY}
-                x2={CX} y2={CY - R - 35}
+                x2={CX} y2={CY - RX - 35}
                 stroke="rgba(99,102,241,0.45)"
                 strokeWidth="1.5"
               >
@@ -215,7 +216,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
               </line>
               {/* Sweep arc fill */}
               <path
-                d={`M ${CX} ${CY} L ${CX} ${CY - R - 35} A ${R + 35} ${R + 35} 0 0 1 ${CX + (R + 35) * Math.sin(Math.PI / 6)} ${CY - (R + 35) * Math.cos(Math.PI / 6)} Z`}
+                d={`M ${CX} ${CY} L ${CX} ${CY - RX - 35} A ${RX + 35} ${RX + 35} 0 0 1 ${CX + (RX + 35) * Math.sin(Math.PI / 6)} ${CY - (RX + 35) * Math.cos(Math.PI / 6)} Z`}
                 fill="rgba(99,102,241,0.04)"
               >
                 <animateTransform attributeName="transform" type="rotate" from={`0 ${CX} ${CY}`} to={`360 ${CX} ${CY}`} dur="3s" repeatCount="indefinite" />
@@ -285,7 +286,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
 
         {/* ── Orbital Node Cards ── */}
         {NODES.map((node, i) => {
-          const { x, y } = polar(node.angle, R, CX, CY);
+          const { x, y } = polar(node.angle, RX, RY, CX, CY);
           const leftPct = (x / VW) * 100;
           const topPct  = (y / VH) * 100;
           const status    = activeStatuses[node.id] ?? "idle";

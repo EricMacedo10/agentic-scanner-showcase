@@ -231,15 +231,15 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
             transition={{ duration: 1.1, repeat: isScanning ? Infinity : 0, ease: "easeInOut" }}
           >
             {/* Outermost glow halo */}
-            <div className="absolute rounded-full" style={{ width: 180, height: 180, top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "radial-gradient(circle, rgba(139,92,246,0.25) 0%, rgba(99,102,241,0.08) 50%, transparent 70%)", filter: "blur(20px)" }} />
+            <div className="absolute rounded-full" style={{ width: "min(40vw, 180px)", height: "min(40vw, 180px)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "radial-gradient(circle, rgba(139,92,246,0.25) 0%, rgba(99,102,241,0.08) 50%, transparent 70%)", filter: "blur(20px)" }} />
             {/* Mid glow */}
-            <div className="absolute rounded-full" style={{ width: 110, height: 110, top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "radial-gradient(circle, rgba(167,139,250,0.3) 0%, transparent 70%)", filter: "blur(10px)" }} />
+            <div className="absolute rounded-full" style={{ width: "min(25vw, 110px)", height: "min(25vw, 110px)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "radial-gradient(circle, rgba(167,139,250,0.3) 0%, transparent 70%)", filter: "blur(10px)" }} />
 
             {/* Rotating outer border */}
             <motion.div
               className="absolute rounded-full"
               style={{
-                width: 100, height: 100,
+                width: "min(22vw, 100px)", height: "min(22vw, 100px)",
                 border: "1px dashed rgba(139,92,246,0.35)",
               }}
               animate={{ rotate: 360 }}
@@ -248,14 +248,14 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
             {/* Static inner ring */}
             <motion.div
               className="absolute rounded-full"
-              style={{ width: 76, height: 76, border: "1px solid rgba(167,139,250,0.5)" }}
+              style={{ width: "min(17vw, 76px)", height: "min(17vw, 76px)", border: "1px solid rgba(167,139,250,0.5)" }}
               animate={isScanning ? { borderColor: ["rgba(139,92,246,0.3)", "rgba(167,139,250,1)", "rgba(139,92,246,0.3)"] } : {}}
               transition={{ duration: 1, repeat: Infinity }}
             />
 
             {/* Brain emoji */}
             <span
-              className="text-6xl select-none relative"
+              className="text-4xl sm:text-6xl select-none relative"
               style={{
                 filter: isScanning
                   ? "drop-shadow(0 0 22px rgba(167,139,250,1)) drop-shadow(0 0 44px rgba(139,92,246,0.8)) drop-shadow(0 0 66px rgba(99,102,241,0.4))"
@@ -322,8 +322,8 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
                 transition={{ duration: 0.9, repeat: isRunning ? Infinity : 0 }}
                 className="relative rounded-xl border text-center cursor-default"
                 style={{
-                  width: "clamp(110px, 19%, 148px)",
-                  padding: "10px 12px",
+                  width: "clamp(80px, 20vw, 148px)",
+                  padding: "8px 6px",
                   borderColor: isActive ? `${node.color}90` : "rgba(148,163,184,0.1)",
                   background: isActive
                     ? `linear-gradient(135deg, ${node.color}20 0%, rgba(5,4,15,0.96) 100%)`
@@ -370,7 +370,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
                 <p
                   className="font-bold leading-tight"
                   style={{
-                    fontSize: 10,
+                    fontSize: "clamp(8px, 2.2vw, 10px)",
                     color: isActive ? node.color : "#475569",
                     transition: "color 0.5s",
                   }}
@@ -379,7 +379,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
                 </p>
 
                 {/* Sub */}
-                <p style={{ fontSize: 8.5, marginTop: 2, color: "rgba(148,163,184,0.4)", lineHeight: 1.3 }}>
+                <p style={{ fontSize: "clamp(7px, 1.8vw, 8.5px)", marginTop: 2, color: "rgba(148,163,184,0.4)", lineHeight: 1.3 }}>
                   {node.sub}
                 </p>
               </motion.div>

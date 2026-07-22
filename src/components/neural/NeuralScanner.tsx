@@ -82,7 +82,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
   const VH = isMobile ? 660 : 500;
   const CX = VW / 2;
   const CY = VH / 2;
-  const R  = isMobile ? 240 : 178;
+  const R  = isMobile ? 210 : 178;
 
   const STARS = useMemo(() => makeStars(isMobile ? 55 : 80, VW, VH), [isMobile, VW, VH]);
 

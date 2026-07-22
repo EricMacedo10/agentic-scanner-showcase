@@ -215,6 +215,7 @@ export default function HomePage() {
 
       {/* ── Body ── */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+        {/* Neural Scanner Container */}
         <div className="flex-1 min-h-0 overflow-hidden">
           <NeuralScanner
             activeStatuses={statuses}
@@ -223,9 +224,8 @@ export default function HomePage() {
           />
         </div>
 
-        <div
-          className="w-full md:w-80 flex-1 md:flex-none min-h-0 md:min-h-auto shrink-0 p-3 overflow-hidden border-t md:border-t-0 md:border-l border-purple-500/20"
-        >
+        {/* Console Container */}
+        <div className="w-full h-[220px] md:h-auto md:w-80 flex-1 md:flex-none min-h-0 shrink-0 p-3 overflow-hidden border-t md:border-t-0 md:border-l border-purple-500/20">
           <TerminalLog logs={logs} isScanning={isScanning} />
         </div>
       </div>

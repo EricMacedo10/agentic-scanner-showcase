@@ -1,16 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export type NodeStatus = "idle" | "running" | "done" | "error";
-
-// ─── SVG ViewBox Constants ────────────────────────────────────────────────────
-const VW = 800;
-const VH = 500;
-const CX = VW / 2;   // 400
-const CY = VH / 2;   // 250
-const R  = 178;       // orbital radius
 
 // ─── Node Definitions ─────────────────────────────────────────────────────────
 export interface NodeDef {
@@ -32,36 +25,35 @@ const DEFAULT_NODES: NodeDef[] = [
   { id: "ui",      angle: 210, label: "Vercel Frontend",  sub: "User Interface",     icon: "📊", color: "#34d399" },
 ];
 
-// ─── Deterministic Starfield (no hydration mismatch) ─────────────────────────
-function makeStars(count: number) {
+// ─── Deterministic Starfield ──────────────────────────────────────────────────
+function makeStars(count: number, vw: number, vh: number) {
   let s = 98765;
   const r = () => { s = (s * 1664525 + 1013904223) & 0x7fffffff; return s / 0x7fffffff; };
   return Array.from({ length: count }, () => ({
-    x: r() * VW, y: r() * VH,
+    x: r() * vw, y: r() * vh,
     radius: r() * 1.3 + 0.2,
     opacity: r() * 0.55 + 0.1,
     dur: r() * 4 + 2,
     delay: r() * 6,
   }));
 }
-const STARS = makeStars(80);
 
 // ─── Math Helpers ─────────────────────────────────────────────────────────────
-function polar(angleDeg: number, r = R) {
+function polar(angleDeg: number, r: number, cx: number, cy: number) {
   const rad = (angleDeg * Math.PI) / 180;
-  return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
 
 /** Quadratic bezier with perpendicular curve offset for elegance */
-function curvePath(nx: number, ny: number): string {
-  const dx = CX - nx;
-  const dy = CY - ny;
+function curvePath(nx: number, ny: number, cx: number, cy: number): string {
+  const dx = cx - nx;
+  const dy = cy - ny;
   const len = Math.sqrt(dx * dx + dy * dy) || 1;
-  const mx = (nx + CX) / 2;
-  const my = (ny + CY) / 2;
+  const mx = (nx + cx) / 2;
+  const my = (ny + cy) / 2;
   const qx = mx + (-dy / len) * len * 0.22;
   const qy = my + (dx  / len) * len * 0.22;
-  return `M ${nx.toFixed(1)} ${ny.toFixed(1)} Q ${qx.toFixed(1)} ${qy.toFixed(1)} ${CX} ${CY}`;
+  return `M ${nx.toFixed(1)} ${ny.toFixed(1)} Q ${qx.toFixed(1)} ${qy.toFixed(1)} ${cx} ${cy}`;
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -77,6 +69,23 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
   // Use LLM-provided nodes if available, otherwise fall back to hardcoded demo nodes
   const NODES: NodeDef[] = (propNodes && propNodes.length > 0 ? propNodes : DEFAULT_NODES).map((n, i) => ({ ...n, step: n.step ?? i + 1 }));
 
+  // ─── Responsive Geometry ───
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const VW = isMobile ? 600 : 800;
+  const VH = isMobile ? 660 : 500;
+  const CX = VW / 2;
+  const CY = VH / 2;
+  const R  = isMobile ? 240 : 178;
+
+  const STARS = useMemo(() => makeStars(isMobile ? 55 : 80, VW, VH), [isMobile, VW, VH]);
+
   return (
     <div
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
@@ -86,7 +95,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
       <div
         className="relative"
         style={{
-          width: "min(100%, calc((100dvh - 100px) * 8 / 5))",
+          width: isMobile ? "100%" : "min(100%, calc((100dvh - 100px) * 8 / 5))",
           aspectRatio: `${VW} / ${VH}`,
         }}
       >
@@ -120,7 +129,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
 
           {/* Hex node markers on the orbital ring */}
           {NODES.map((node) => {
-            const { x, y } = polar(node.angle, R);
+            const { x, y } = polar(node.angle, R, CX, CY);
             return (
               <circle
                 key={node.id + "-marker"}
@@ -136,8 +145,8 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
 
           {/* Connection paths */}
           {NODES.map((node) => {
-            const { x, y } = polar(node.angle);
-            const path = curvePath(x, y);
+            const { x, y } = polar(node.angle, R, CX, CY);
+            const path = curvePath(x, y, CX, CY);
             const status = activeStatuses[node.id] ?? "idle";
             const isRunning = status === "running";
             const isDone    = status === "done";
@@ -276,7 +285,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
 
         {/* ── Orbital Node Cards ── */}
         {NODES.map((node, i) => {
-          const { x, y } = polar(node.angle);
+          const { x, y } = polar(node.angle, R, CX, CY);
           const leftPct = (x / VW) * 100;
           const topPct  = (y / VH) * 100;
           const status    = activeStatuses[node.id] ?? "idle";

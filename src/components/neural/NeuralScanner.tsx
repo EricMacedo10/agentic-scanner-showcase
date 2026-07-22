@@ -296,14 +296,13 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
           return (
             <motion.div
               key={node.id}
-              initial={{ opacity: 0, scale: 0.4 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.4, x: "-50%", y: "-50%" }}
+              animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
               transition={{ delay: (node.step ?? (i + 1)) * 0.1, type: "spring", stiffness: 160, damping: 14 }}
               className="absolute"
               style={{
                 left: `${leftPct}%`,
                 top:  `${topPct}%`,
-                transform: "translate(-50%, -50%)",
                 zIndex: 20,
               }}
             >
@@ -331,8 +330,8 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
                 transition={{ duration: 0.9, repeat: isRunning ? Infinity : 0 }}
                 className="relative rounded-xl border text-center cursor-default"
                 style={{
-                  width: "clamp(80px, 20vw, 148px)",
-                  padding: "8px 6px",
+                  width: "clamp(70px, 17vw, 148px)",
+                  padding: "6px 4px",
                   borderColor: isActive ? `${node.color}90` : "rgba(148,163,184,0.1)",
                   background: isActive
                     ? `linear-gradient(135deg, ${node.color}20 0%, rgba(5,4,15,0.96) 100%)`
@@ -373,7 +372,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
                 />
 
                 {/* Icon */}
-                <div className="text-2xl mb-1 leading-none">{node.icon}</div>
+                <div className="text-xl sm:text-2xl mb-1 leading-none">{node.icon}</div>
 
                 {/* Label */}
                 <p
@@ -388,7 +387,7 @@ export default function NeuralScanner({ activeStatuses, isScanning, nodes: propN
                 </p>
 
                 {/* Sub */}
-                <p style={{ fontSize: "clamp(7px, 1.8vw, 8.5px)", marginTop: 2, color: "rgba(148,163,184,0.4)", lineHeight: 1.3 }}>
+                <p style={{ fontSize: "clamp(6.5px, 1.5vw, 8.5px)", marginTop: 2, color: "rgba(148,163,184,0.4)", lineHeight: 1.3 }}>
                   {node.sub}
                 </p>
               </motion.div>

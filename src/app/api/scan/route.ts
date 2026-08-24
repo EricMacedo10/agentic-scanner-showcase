@@ -162,19 +162,22 @@ export async function POST(req: NextRequest): Promise<NextResponse<ScanResponse>
     logs.push("📄 Lendo arquivos-chave do projeto...");
     const fileContents = readPriorityFiles(projectPath);
 
-    // 5. Call OpenAI
-    const apiKey = process.env.OPENAI_API_KEY;
-    const model  = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+    // 5. Call DeepSeek
+    const apiKey = process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY;
+    const model  = process.env.DEEPSEEK_MODEL || process.env.OPENAI_MODEL || "deepseek-chat";
 
     if (!apiKey || apiKey === "sk-your-key-here") {
       return NextResponse.json({
         projectName: "", description: "", nodes: [], logs,
-        error: "OPENAI_API_KEY não configurada. Edite o arquivo .env.local e reinicie o servidor.",
+        error: "DEEPSEEK_API_KEY não configurada. Edite o arquivo .env.local e reinicie o servidor.",
       }, { status: 500 });
     }
 
-    logs.push(`🧠 Enviando para ${model}...`);
-    const client = new OpenAI({ apiKey });
+    logs.push(`🧠 Enviando para DeepSeek (${model})...`);
+    const client = new OpenAI({ 
+      apiKey,
+      baseURL: "https://api.deepseek.com" 
+    });
 
     const userMessage = `PROJECT FILE TREE:\n${fileTree}\n\nKEY FILE CONTENTS:${fileContents}`;
 

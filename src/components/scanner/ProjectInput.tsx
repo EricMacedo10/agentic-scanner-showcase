@@ -34,7 +34,7 @@ const LOADING_MESSAGES = [
   "Lendo package.json, requirements.txt...",
   "Analisando arquivos de configuração...",
   "Enviando contexto para o LLM...",
-  "GPT-4o analisando a arquitetura...",
+  "DeepSeek V3 analisando a arquitetura...",
   "Identificando nós do pipeline agêntico...",
   "Enriquecendo nós com cores e posições orbitais...",
   "Finalizando análise...",
@@ -150,7 +150,7 @@ export default function ProjectInput({ isOpen, onClose, onScanComplete }: Projec
               <div>
                 <h2 className="text-base font-bold text-white">Scan Real Project</h2>
                 <p className="text-xs" style={{ color: "rgba(139,92,246,0.8)" }}>
-                  Análise de arquitetura com IA · GPT-4o
+                  Análise de arquitetura com IA · DeepSeek
                 </p>
               </div>
             </div>
@@ -241,7 +241,7 @@ export default function ProjectInput({ isOpen, onClose, onScanComplete }: Projec
               {/* Info box */}
               {!isLoading && !error && (
                 <div className="rounded-lg px-3 py-2.5 text-xs" style={{ background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)", color: "rgba(165,180,252,0.6)" }}>
-                  💡 O scanner irá ler os arquivos do projeto localmente e usar IA para identificar a arquitetura agêntica. Sua chave OpenAI é usada apenas nesta máquina.
+                  💡 O scanner irá ler os arquivos do projeto localmente e usar IA para identificar a arquitetura agêntica. Sua chave DeepSeek é usada apenas nesta máquina.
                 </div>
               )}
 

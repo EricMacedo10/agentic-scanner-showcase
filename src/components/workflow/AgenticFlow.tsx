@@ -70,7 +70,7 @@ const INITIAL_NODES: Node<AgentNodeData>[] = [
     data: {
       step: 4,
       label: "LLM Engine",
-      description: "Processando contexto injetado. GPT-4o / Gemini.",
+      description: "Processando contexto injetado. DeepSeek / Gemini.",
       icon: "🧠",
       status: "idle",
     },
